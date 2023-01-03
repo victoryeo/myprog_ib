@@ -1,4 +1,4 @@
-nodejs platform backend
+nodejs platform backend, with helmchart, k8s, and IBRK access
 
 ## API
 
@@ -26,6 +26,7 @@ Clone `.env-sample` to `.env` and update value for following environment variabl
 
 ## curl command test
 curl -X GET http://localhost:4006/api/v1/healthz
+curl -X GET http://localhost:4006/api/v1/ibex
 
 ## docker build command
 docker build --progress=plain -t victoryeo00/myprog:latest .
