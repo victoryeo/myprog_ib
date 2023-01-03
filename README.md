@@ -37,7 +37,7 @@ docker run -u node -p 4002:4002  victoryeo00/myprog:latest
 
 ## deploy and delete k8s
 ```
-kubectl apply -f create-deployment.yaml
+kubectl apply -f k8s/create-deployment.yaml
 kubectl delete deployment myprog
 kubectl delete svc myprog-service
 ```
