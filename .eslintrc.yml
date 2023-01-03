@@ -1,0 +1,52 @@
+env:
+  browser: true
+  es6: true
+
+parserOptions:
+  # Support new ECMA syntax
+  ecmaVersion: 2018
+  sourceType: module
+
+parser: '@typescript-eslint/parser' # Specifies the ESLint parser
+
+plugins:
+  - sonarjs
+  - security
+  - promise
+  - filenames
+
+# Using Airbnb style guide
+extends:
+  - eslint:recommended
+  - airbnb-base
+  - plugin:sonarjs/recommended
+  - plugin:security/recommended
+  - plugin:promise/recommended
+  # Enables eslint-plugin-prettier and displays prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
+  - plugin:prettier/recommended
+
+rules:
+  # Custom
+  arrow-parens: [2, 'as-needed']
+  comma-dangle: ['error', 'only-multiline']
+
+  # Warning
+  no-unused-vars: [0]
+
+  # Disable
+  operator-linebreak: [0]
+  implicit-arrow-linebreak: [0]
+  dot-notation: [0]
+  class-methods-use-this: [0]
+  function-paren-newline: [0]
+  no-await-in-loop: [0]
+  global-require: [0]
+  no-console: [0] # ['error', { allow: ['log', 'warn', 'error'] }]
+  'node/no-unsupported-features/es-syntax': [0] # ['error', { 'version': '>=10.13.0', 'ignores': [] }]
+  import/no-unresolved: [0]
+  import/extensions: [0]
+  no-useless-constructor: [0]
+  import/prefer-default-export: [0]
+  no-empty-function: [0]
+  max-classes-per-file: [0]
+  no-return-await: [1]

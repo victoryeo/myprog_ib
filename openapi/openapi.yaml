@@ -1,0 +1,56 @@
+openapi: 3.0.2
+info:
+  title: myprog API
+  description: myprog API Service
+  termsOfService: NA
+  contact:
+    email: victoryeo@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: 1.0.0
+externalDocs:
+  description: NA
+  url: NA
+servers:
+  - url: /api/v1
+tags:
+  - name: myprog
+    description: APIs for myprog
+paths:
+  /healthz:
+    get:
+      security:
+        - bearerToken: []
+      summary: health 
+      description: Get health
+      responses:
+        '200':
+          description: It indicates that the request has succeeded and returns health information.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:   
+                  message:
+                    type: string
+components:
+  securitySchemes:
+    bearerToken:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Result:
+      type: object
+      description: return result
+      properties:
+        resultReturn:
+          type: string
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        timestamp:
+          type: string

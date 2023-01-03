@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+   name: myprog-pod
+spec:
+   containers:
+   - name: myprog-container01
+     image: victoryeo00/myprog:latest
+     ports:
+     - containerPort: 6379
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: myprog-pod
+  labels:
+    name: myprog-pod
+spec:
+  type: NodePort
+  ports:
+    - port: 4002
+      nodePort: 30036
+      name: http
+  selector:
+    name: myprog-pod

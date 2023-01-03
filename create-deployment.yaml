@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: myprog
+  name: myprog
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: myprog
+  template:
+    metadata:
+      labels:
+        app: myprog
+    spec:
+      containers:
+      - image: victoryeo00/myprog:latest
+        name: myprog
+        ports:
+        - containerPort: 4002
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: myprog-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: myprog
+  ports:
+    - protocol: TCP
+      port: 4002
+      targetPort: 4002
+  

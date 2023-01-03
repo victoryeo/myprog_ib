@@ -1,0 +1,9 @@
+dist/
+.nyc_output/
+coverage/
+node_modules/
+scripts/
+chart/
+*.spec.ts
+*.e2e-spec.ts
+/src/dtos
