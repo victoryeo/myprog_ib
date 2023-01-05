@@ -48,6 +48,12 @@ export class HftradingService {
   }
 
   recalculate_strategy_params() {
-    
+    // calculate beta and vol ratio for signal indicators
+    let resampled = this.df_hist.map(
+      elem=>({...elem[0] + Math.random()})
+    );
+    console.log(resampled)
+    let mean = resampled.mean();
+    this.beta = mean[0]/mean[1];
   }
 }
