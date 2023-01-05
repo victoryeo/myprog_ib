@@ -25,8 +25,10 @@ Clone `.env-sample` to `.env` and update value for following environment variabl
 | `PORT`               | 3000           | Application port name     |
 
 ## curl command test
+```
 curl -X GET http://localhost:4006/api/v1/healthz
 curl -X GET http://localhost:4006/api/v1/ibex
+```
 
 ## docker build command
 docker build --progress=plain -t victoryeo00/myprog:latest .
