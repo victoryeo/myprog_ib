@@ -20,6 +20,22 @@ export class HftradingService {
     try {
       this.df_hist = this.initialise_data_frame();
       this.ib = this.ibexService.getIbInstance();
+      this.ib.connect();
+
+      this.ib.on(EventName.error, (err: Error, code: ErrorCode, 
+        reqId: number) => {
+        console.error(`${err.message} - code: ${code} - reqId: ${reqId}`);
+      })
+      .on(
+        // recalculate account updates at intervals
+        EventName.position,
+        (account: string, contract: Contract, pos: number, 
+          avgCost?: number) => {
+          console.log(`${account}: ${pos} x ${contract.symbol} @ ${avgCost}`);
+          this.recalculate_strategy_params();
+        }
+      )
+
     } catch (err) {
       console.warn('Error in HftradingService constructor.', err);
     }
@@ -29,5 +45,9 @@ export class HftradingService {
     let twod_array = [
       [2.3, 3.5, 4.5],['Jan-03-2023','Jan-04-2023','Jan-05-2023']];
     return twod_array;
+  }
+
+  recalculate_strategy_params() {
+    
   }
 }
