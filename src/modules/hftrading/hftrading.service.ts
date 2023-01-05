@@ -7,7 +7,9 @@ import { IbexService } from '../ibex/ibex.service';
 export class HftradingService {
   ib: IBApi;
   df_hist: any;
+  // vol ratio: the std dev of pct changes of A over B
   volatility_ratio: number;
+  // beta: the mean prices of A over B
   beta: number;
 
   constructor(
@@ -43,7 +45,9 @@ export class HftradingService {
 
   initialise_data_frame() {
     let twod_array = [
-      [2.3, 3.5, 4.5],['Jan-03-2023','Jan-04-2023','Jan-05-2023']];
+      [2.3, 3.5, 4.5],['Jan-03-2023','Jan-04-2023','Jan-05-2023'],
+      [3.1, 6.3, 5.2],['Jan-03-2023','Jan-04-2023','Jan-05-2023']
+    ];
     return twod_array;
   }
 
