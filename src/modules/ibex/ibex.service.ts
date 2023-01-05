@@ -1,7 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { IBApi, EventName, ErrorCode, Contract } from "@stoqey/ib";
-import { SecType } from '@stoqey/ib';
-import { OrderType, OrderAction, Order } from '@stoqey/ib';
+import { SecType, OrderType, OrderAction, Order } from '@stoqey/ib';
 
 @Injectable()
 export class IbexService {
@@ -64,12 +63,26 @@ export class IbexService {
         account: "YOUR_ACCOUNT_ID",
       };
     
-      this.ib.placeOrder(orderId, contract, order);
+      let retVal = this.ib.placeOrder(orderId, contract, order);
+      //console.log(retVal)
+
+      this.ib.on(EventName.openOrder, (orderId, _contract, _order, _orderState) => {
+        if (orderId === orderId) {
+          // done
+          Logger.log("done");
+          this.ib.disconnect();
+        }
+      }).on(EventName.openOrderEnd, () => {
+        Logger.log("finished");
+      }).on(EventName.error, (error: Error, _code: ErrorCode, _reqId: number) => {
+        Logger.log("error", error.message);
+      }).on(EventName.all, (event: EventName) => {
+        Logger.log("all", event);
+      });
     });
     
     this.ib.connect();
-    let retVal = this.ib.reqIds();
-    Logger.log("return value", this.objToString(retVal));
+    this.ib.reqIds();
   }
 
   objToString(obj) {
