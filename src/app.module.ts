@@ -4,7 +4,7 @@ import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { HealthModule } from './modules/health/health.module';
 import { LoggingInterceptor } from './common/logging.interceptor';
 import { IbexModule } from './modules/ibex/ibex.module';
-
+import { HftradingModule } from './modules/hftrading/hftrading.module';
 
 @Module({
   imports: [
@@ -12,7 +12,8 @@ import { IbexModule } from './modules/ibex/ibex.module';
       expandVariables: true,
     }),
     HealthModule,
-    IbexModule
+    IbexModule,
+    HftradingModule
   ],
   controllers: [],
   providers: [
