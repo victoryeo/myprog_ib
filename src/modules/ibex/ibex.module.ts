@@ -5,6 +5,7 @@ import { IbexService } from './ibex.service';
 @Module({
   controllers: [IbexController],
   providers: [IbexService],
+  exports: [IbexService],
 })
 
 export class IbexModule {}
