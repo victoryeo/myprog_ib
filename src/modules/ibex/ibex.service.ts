@@ -85,6 +85,10 @@ export class IbexService {
     this.ib.reqIds();
   }
 
+  getIbInstance() {
+    return this.ib;
+  }
+
   objToString(obj) {
     let str = '';
     for (let p in obj) {
