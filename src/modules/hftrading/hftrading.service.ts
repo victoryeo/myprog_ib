@@ -40,7 +40,7 @@ export class HftradingService {
         }
       )
 
-      //this.recalculate_strategy_params();
+      this.recalculate_strategy_params();
     } catch (err) {
       console.warn('Error in HftradingService constructor.', err);
     }
@@ -57,12 +57,13 @@ export class HftradingService {
   recalculate_strategy_params() {
     let sum_a: number = 0, sum_b: number = 0;
     let mean_a: number = 0, mean_b: number = 0;
+    let stddev_a: number = 0, stddev_b: number = 0;
     let [symbol_a, symbol_b] = this.symbols;
     console.log(this.df_hist)
     // calculate beta and vol ratio for signal indicators
     this.df_hist.map(
       (elem, index)=>{
-        console.log(index, elem)
+        //console.log(index, elem)
         elem.map((mele, counter)=>{
           if (index == 0) {
             sum_a += mele;
@@ -74,8 +75,18 @@ export class HftradingService {
         })
       }
     );
-    console.log(sum_a, sum_b)
-    console.log(mean_a, mean_b)
+    console.log("sum:", sum_a, sum_b)
+    console.log("mean:" ,mean_a, mean_b)
+    stddev_a = this.calcStandardDeviation(this.df_hist[0]);
+    stddev_b = this.calcStandardDeviation(this.df_hist[1]);
+    console.log("stddev", stddev_a, stddev_b)
     this.beta = mean_a/mean_b;
+    this.volatility_ratio = stddev_a / stddev_b;
+  }
+
+  calcStandardDeviation(array) {
+    const n = array.length
+    const mean = array.reduce((a, b) => a + b) / n
+    return Math.sqrt(array.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / n)
   }
 }
