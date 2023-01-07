@@ -1,4 +1,7 @@
-nodejs platform backend, with helmchart, k8s, and IBRK access
+## Summary
+Nodejs platform backend, with helmchart, k8s, and IBRK access
+  
+with added mean reversal high frequency trading model.
 
 ## API
 
