@@ -11,6 +11,7 @@ export class HftradingService {
   volatility_ratio: number;
   // beta: the mean prices of A over B
   beta: number;
+  symbols: Array<string>; 
 
   constructor(
     private ibexService: IbexService,
@@ -18,6 +19,7 @@ export class HftradingService {
     this.df_hist = null;
     this.volatility_ratio = 1;
     this.beta = 0;
+    this.symbols = ['AAPL','GOOG'];
     
     try {
       this.df_hist = this.initialise_data_frame();
@@ -38,6 +40,7 @@ export class HftradingService {
         }
       )
 
+      //this.recalculate_strategy_params();
     } catch (err) {
       console.warn('Error in HftradingService constructor.', err);
     }
@@ -45,19 +48,34 @@ export class HftradingService {
 
   initialise_data_frame() {
     let twod_array = [
-      [2.3, 3.5, 4.5],['Jan-03-2023','Jan-04-2023','Jan-05-2023'],
-      [3.1, 6.3, 5.2],['Jan-03-2023','Jan-04-2023','Jan-05-2023']
+      [2.3, 3.5, 4.5, 3.4, 4.5, 3.5],   //AAPL
+      [3.1, 6.3, 5.2, 11.2, 12.3, 10.5] //GOOG
     ];
     return twod_array;
   }
 
   recalculate_strategy_params() {
+    let sum_a: number = 0, sum_b: number = 0;
+    let mean_a: number = 0, mean_b: number = 0;
+    let [symbol_a, symbol_b] = this.symbols;
+    console.log(this.df_hist)
     // calculate beta and vol ratio for signal indicators
-    let resampled = this.df_hist.map(
-      elem=>({...elem[0] + Math.random()})
+    this.df_hist.map(
+      (elem, index)=>{
+        console.log(index, elem)
+        elem.map((mele, counter)=>{
+          if (index == 0) {
+            sum_a += mele;
+            mean_a = sum_a/(counter+1);
+          }
+          else if (index == 1) 
+            sum_b += mele;
+            mean_b = sum_b/(counter+1);
+        })
+      }
     );
-    console.log(resampled)
-    let mean = resampled.mean();
-    this.beta = mean[0]/mean[1];
+    console.log(sum_a, sum_b)
+    console.log(mean_a, mean_b)
+    this.beta = mean_a/mean_b;
   }
 }
